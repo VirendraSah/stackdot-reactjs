@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Product } from './Component/product'
 function App() {
-  let [category, usecategory] = useState('')
+  let [category, setCategory] = useState('')
+  let [search, setSearch] = useState('')
 
   const onsubmit = (e) => {
-    usecategory(e.target.value)
+    setCategory(e.target.value)
   }
   return (
 
@@ -14,7 +15,7 @@ function App() {
         <div className='flex flex-col gap-3'>
           <div>
             <label htmlFor="" className='font-bold'>Search</label>
-            <input type="text" className='border w-full rounded p-2' />
+            <input onChange={(e)=> setSearch(e.target.value)} name='search' type="text" className='border w-full rounded p-2' />
           </div>
           <select onChange={onsubmit} name="categoryfilter" id="" className='w-full p-2 rounded-md border-2 border-gray-300'>
             <option value="">All</option>
@@ -25,7 +26,7 @@ function App() {
         </div>
       </div>
       <div className='w-full'>
-        <Product category={category} />
+        <Product category={category} search={search} />
       </div>
     </div>
 

@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react'
-function Product({ category }) {
+function Product({ category , search}) {
     const [products, setProducts] = useState([])
     const fetchProducts = async () => {
         const response = await fetch('https://fakestoreapi.com/products')
         const data = await response.json()
         setProducts(data)
     }
-    const filterProduct = products.filter(product => {
-        return (category ? product.category===category : true)})
-    console.log(filterProduct)
+    const filterProduct = products.filter(product =>{
+        const matchsCategory= (category ? product.category===category : true)
+        const matchesSearch= (product.title.toLowerCase().includes(search.toLowerCase()))
+        return matchsCategory && matchesSearch
+    })
     useEffect(() => {
         fetchProducts()
-    }, [category])
+    }, [category, search])
     return (
         <div>
             <h1 className="text-3xl font-bold text-center">Products</h1>
